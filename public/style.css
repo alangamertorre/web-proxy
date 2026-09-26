@@ -207,7 +207,7 @@ h1 span {
     stroke-width: 1.4;
 }
 
-input[type="url"] {
+.input-wrap input[type="text"] {
     width: 100%;
     min-width: 0;
     border: 0;
@@ -217,7 +217,7 @@ input[type="url"] {
     font-size: 15px;
 }
 
-input[type="url"]::placeholder {
+.input-wrap input[type="text"]::placeholder {
     color: #727b72;
     opacity: 1;
 }
@@ -302,9 +302,9 @@ button[type="submit"] svg {
 }
 
 .viewer {
-    flex: 1;
-    max-height: 80%;
-    min-height: 30%;
+    flex: 1 1 auto;
+    min-height: clamp(420px, 62vh, 720px);
+    max-height: none;
     margin-top: 23px;
     margin-bottom: 25px;
     display: flex;
@@ -428,7 +428,7 @@ button[type="submit"] svg {
 iframe {
     width: 100%;
     height: 100%;
-    min-height: 286px;
+    min-height: 0;
     display: block;
     border: 0;
     background: #f5f5f1;
@@ -523,12 +523,6 @@ iframe {
     }
 }
 
-@media (min-height: 900px) {
-    .viewer {
-        min-height: 390px;
-    }
-}
-
 @media (max-width: 640px) {
     .workspace {
         padding: 0 20px;
@@ -579,7 +573,7 @@ iframe {
     }
 
     .viewer {
-        min-height: clamp(260px, 48vh, 420px);
+        min-height: clamp(360px, 54vh, 520px);
         margin-top: 20px;
     }
 
