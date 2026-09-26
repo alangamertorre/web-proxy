@@ -40,7 +40,7 @@
                             <path
                                 d="M3.5 12h17M12 3c2.2 2.4 3.2 5.4 3.2 9s-1 6.6-3.2 9c-2.2-2.4-3.2-5.4-3.2-9s1-6.6 3.2-9Z" />
                         </svg>
-                        <input id="url-input" name="url" type="url" placeholder="https://wikipedia.org"
+                        <input id="url-input" name="url" type="text" inputmode="url" placeholder="wikipedia.org"
                             autocomplete="url" required>
                     </div>
                     <button type="submit">
@@ -50,16 +50,38 @@
                         </svg>
                     </button>
                 </div>
-                <p class="form-hint" id="form-hint" aria-live="polite">Se aceptan direcciones que empiecen por https://
-                    o http://</p>
+                <p class="form-hint" id="form-hint" aria-live="polite">Puedes escribir una dirección con o sin https://
+                </p>
             </form>
+
+            <div class="suggestions">
+                <label for="suggested-url">JUEGOS Y SITIOS SUGERIDOS</label>
+                <select id="suggested-url">
+                    <option value="">Selecciona una dirección</option>
+                    <option value="https://krunker.io">Krunker</option>
+                    <option value="https://agar.io">Agar.io</option>
+                    <option value="https://slither.io">Slither.io</option>
+                    <option value="https://shellshock.io">Shell Shockers</option>
+                    <option value="https://poki.com">Poki</option>
+                    <option value="https://itch.io/games/free">Itch.io · juegos gratis</option>
+                    <option value="https://archive.org/details/softwarelibrary_flash">Internet Archive · Flash</option>
+                </select>
+            </div>
 
             <section class="viewer" aria-label="Visor de páginas web">
                 <div class="viewer-bar">
                     <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
                     <div class="viewer-label"><span class="viewer-lock" aria-hidden="true">◈</span><span
                             id="current-address">ESPERANDO DIRECCIÓN</span></div>
-                    <span class="viewer-index">VIEW&nbsp; 01</span>
+                    <div class="viewer-tools">
+                        <span class="viewer-index">VIEW&nbsp; 01</span>
+                        <button class="fullscreen-button" id="fullscreen-button" type="button"
+                            aria-label="Abrir el visor en pantalla completa" title="Pantalla completa">
+                            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                <path d="M7 3H3v4M13 3h4v4M17 13v4h-4M3 13v4h4" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 <div class="frame-wrap" id="frame-wrap">
                     <div class="empty-state" id="empty-state" aria-hidden="false">
@@ -69,8 +91,7 @@
                         <span>La página aparecerá aquí</span>
                     </div>
                     <iframe id="web-frame" title="Página web solicitada" src="about:blank"
-                        sandbox="allow-scripts allow-forms allow-popups"
-                        referrerpolicy="no-referrer"></iframe>
+                        sandbox="allow-scripts allow-forms allow-popups" referrerpolicy="no-referrer"></iframe>
                 </div>
             </section>
         </section>
