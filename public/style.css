@@ -271,7 +271,7 @@ button[type="submit"] svg {
 
 .viewer {
     flex: 1;
-    min-height: 550px;
+    min-height: clamp(300px, 52vh, 550px);
     margin-top: 23px;
     margin-bottom: 25px;
     display: flex;
@@ -345,9 +345,10 @@ button[type="submit"] svg {
 
 .frame-wrap {
     position: relative;
-    height: 100%;
-    min-height: 286px;
-    flex: 1;
+    width: 100%;
+    min-height: 0;
+    flex: 1 1 0;
+    overflow: hidden;
     background: #f5f5f1;
 }
 
@@ -505,7 +506,7 @@ iframe {
     }
 
     .viewer {
-        min-height: 300px;
+        min-height: clamp(260px, 48vh, 420px);
         margin-top: 20px;
     }
 
