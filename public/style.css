@@ -207,6 +207,20 @@ h1 span {
     stroke-width: 1.4;
 }
 
+#url-input {
+    min-width: 0;
+    height: 58px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 17px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: rgba(25, 30, 26, .94);
+    transition: border-color .18s,
+        box-shadow .18s;
+}
+
 .input-wrap input[type="text"] {
     width: 100%;
     min-width: 0;
@@ -418,6 +432,7 @@ button[type="submit"] svg {
 
 .frame-wrap {
     position: relative;
+    height: 80%;
     width: 100%;
     min-height: 0;
     flex: 1 1 0;
