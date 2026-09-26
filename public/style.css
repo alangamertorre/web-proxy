@@ -345,6 +345,7 @@ button[type="submit"] svg {
 
 .frame-wrap {
     position: relative;
+    height: 100%;
     min-height: 286px;
     flex: 1;
     background: #f5f5f1;
