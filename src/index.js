@@ -73,7 +73,7 @@ async function cargarProxy(urlCompleta, hostname) {
     // Limpia el mensaje de carga cuando finalice con éxito
     hint.textContent = "";
   } catch (error) {
-    console.error("Error al cargar mediante el proxy:", error.message);
+    alert("Error al cargar mediante el proxy:", error.message);
     hint.textContent = `Error: ${error.message}`;
     hint.classList.add("is-error");
     emptyState.removeAttribute("hidden");
