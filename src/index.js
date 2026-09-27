@@ -91,32 +91,12 @@ document.addEventListener("fullscreenchange", () => {
     : "Pantalla completa";
 });
 
-// Elimina políticas que impiden el iframe y mantiene la navegación dentro del proxy.
-function prepararHtmlParaIframe(html, urlBase) {
-  const documento = new DOMParser().parseFromString(html, "text/html");
-
-  documento
-    .querySelectorAll(
-      'meta[http-equiv="Content-Security-Policy"], meta[http-equiv="X-Frame-Options"]',
-    )
-    .forEach((meta) => meta.remove());
-
-  documento.querySelectorAll("a[href]").forEach((enlace) => {
-    try {
-      const destino = new URL(enlace.getAttribute("href"), urlBase);
-      if (["http:", "https:"].includes(destino.protocol)) {
-        enlace.href = `${API_URL}/proxy?url=${encodeURIComponent(destino.href)}`;
-      }
-    } catch {
-      // Deja intactos los enlaces especiales como mailto: o javascript:.
-    }
-  });
-
-  return documento.documentElement.outerHTML;
-}
-
 // Asegúrate de añadir el protocolo https:// a la URL de tu backend en Railway
 const [API_URL] = ["https://web-proxy-backend-production.up.railway.app"];
+
+frame.addEventListener("load", () => {
+  hint.textContent = "";
+});
 
 async function cargarProxy(urlCompleta, hostname) {
   hint.textContent = "Cargando a través de Railway Proxy…";
@@ -124,29 +104,5 @@ async function cargarProxy(urlCompleta, hostname) {
   currentAddress.textContent = hostname.toUpperCase();
   emptyState.setAttribute("hidden", "true");
 
-  try {
-    const respuesta = await fetch(
-      `${API_URL}/proxy?url=${encodeURIComponent(urlCompleta)}`,
-    );
-
-    if (!respuesta.ok) {
-      const errorData = await respuesta.json().catch(() => ({}));
-      throw new Error(
-        errorData.error || `Error del servidor: ${respuesta.status}`,
-      );
-    }
-
-    const htmlOriginal = await respuesta.text();
-    const htmlModificado = prepararHtmlParaIframe(htmlOriginal, urlCompleta);
-
-    // El sandbox evita que el HTML remoto acceda al documento de GitHub Pages.
-    frame.srcdoc = htmlModificado;
-
-    // Limpia el mensaje de carga cuando finalice con éxito
-    hint.textContent = "";
-  } catch (error) {
-    hint.textContent = `Error: ${error.message}`;
-    hint.classList.add("is-error");
-    emptyState.removeAttribute("hidden");
-  }
+  frame.src = `${API_URL}/proxy?url=${encodeURIComponent(urlCompleta)}`;
 }
