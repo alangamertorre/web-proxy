@@ -104,5 +104,29 @@ async function cargarProxy(urlCompleta, hostname) {
   currentAddress.textContent = hostname.toUpperCase();
   emptyState.setAttribute("hidden", "true");
 
-  frame.src = `${API_URL}/proxy?url=${encodeURIComponent(urlCompleta)}`;
+  frame.src = cargarPagina(
+    `${API_URL}/proxy?url=${encodeURIComponent(urlCompleta)}`,
+  );
+  console.log(`${API_URL}/proxy?url=${encodeURIComponent(urlCompleta)}`);
+}
+
+function cargarPagina(url) {
+  const contenedor = document.getElementById("contenedor-web");
+  contenedor.innerHTML = "Cargando...";
+
+  // Hacemos la petición para descargar el HTML de la web
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Error al descargar la página");
+      }
+      return response.text(); // Convertimos la respuesta a texto (HTML)
+    })
+    .then((html) => {
+      // Insertamos el HTML dentro del DIV
+      contenedor.innerHTML = html;
+    })
+    .catch((error) => {
+      contenedor.innerHTML = "No se pudo cargar la página: " + error.message;
+    });
 }
