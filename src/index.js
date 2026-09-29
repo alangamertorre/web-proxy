@@ -38,7 +38,6 @@ const dataPromise = Promise.all([
     hint.classList.add("is-error");
   });
 
-dataPromise;
 // Añade HTTPS cuando el usuario escribe un dominio sin protocolo.
 function prepararDireccion(value) {
   const address = value.trim();
@@ -128,6 +127,7 @@ frame.addEventListener("load", () => {
 });
 
 async function cargarProxy(urlCompleta, hostname) {
+  await dataPromise;
   const API_URL = "https://web-proxy-backend-production.up.railway.app";
   hint.textContent = "Cargando a través de Railway Proxy…";
   hint.classList.remove("is-error");
@@ -135,6 +135,7 @@ async function cargarProxy(urlCompleta, hostname) {
   emptyState.setAttribute("hidden", "true");
 
   for (const path of container.path) {
+    console.log("Ok", path);
     if (urlCompleta.includes(path)) {
       window.open(path, "_blank", "noopener,noreferrer");
       return;
