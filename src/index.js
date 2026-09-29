@@ -5,8 +5,26 @@ const emptyState = document.querySelector("#empty-state");
 const currentAddress = document.querySelector("#current-address");
 const hint = document.querySelector("#form-hint");
 const suggestedUrl = document.querySelector("#suggested-url");
+const deafultUrls = document.querySelectorAll(".deafult-url-item");
 const viewer = document.querySelector(".viewer");
 const fullscreenButton = document.querySelector("#fullscreen-button");
+
+import container from "./data/openWindowList.json";
+import pages from "./data/deafultPaths.json";
+
+// Páginas predeterminadas.
+let [maxLength, length] = [7, 0];
+function insertInfo(element, name, href) {
+  if (maxLength <= length) return;
+
+  element.value = href;
+  element.textContent = name;
+  length++;
+}
+
+deafultUrls.forEach((element, index) => {
+  insertInfo(element, pages.name[index], pages.path[index]);
+});
 
 // Añade HTTPS cuando el usuario escribe un dominio sin protocolo.
 function prepararDireccion(value) {
@@ -98,11 +116,18 @@ frame.addEventListener("load", () => {
   hint.textContent = "";
 });
 
-async function cargarProxy(urlCompleta, hostname) {
+function cargarProxy(urlCompleta, hostname) {
   hint.textContent = "Cargando a través de Railway Proxy…";
   hint.classList.remove("is-error");
   currentAddress.textContent = hostname.toUpperCase();
   emptyState.setAttribute("hidden", "true");
+
+  for (const path of container.path) {
+    if (urlCompleta.includes(path)) {
+      window.open(path, "_blank", "noopener,noreferrer");
+      return;
+    }
+  }
 
   frame.src = `${API_URL}/proxy?url=${encodeURIComponent(urlCompleta)}`;
   console.log(`${API_URL}/proxy?url=${encodeURIComponent(urlCompleta)}`);
