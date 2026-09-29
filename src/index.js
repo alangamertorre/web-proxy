@@ -9,22 +9,34 @@ const deafultUrls = document.querySelectorAll(".deafult-url-item");
 const viewer = document.querySelector(".viewer");
 const fullscreenButton = document.querySelector("#fullscreen-button");
 
-import container from "./data/openWindowList.json";
-import pages from "./data/deafultPaths.json";
+let container = { path: [] };
+let pages = { name: [], path: [] };
+const dataPromise = Promise.all([
+  fetch(new URL("./data/openWindowList.json", import.meta.url)),
+  fetch(new URL("./data/deafultPaths.json", import.meta.url)),
+])
+  .then(async ([containerResponse, pagesResponse]) => {
+    if (!containerResponse.ok || !pagesResponse.ok) {
+      throw new Error("No se pudieron cargar las páginas predeterminadas");
+    }
 
-// Páginas predeterminadas.
-let [maxLength, length] = [7, 0];
-function insertInfo(element, name, href) {
-  if (maxLength <= length) return;
+    [container, pages] = await Promise.all([
+      containerResponse.json(),
+      pagesResponse.json(),
+    ]);
 
-  element.value = href;
-  element.textContent = name;
-  length++;
-}
-
-deafultUrls.forEach((element, index) => {
-  insertInfo(element, pages.name[index], pages.path[index]);
-});
+    // Páginas predeterminadas.
+    deafultUrls.forEach((element, index) => {
+      if (pages.name[index] && pages.path[index]) {
+        element.value = pages.path[index];
+        element.textContent = pages.name[index];
+      }
+    });
+  })
+  .catch(() => {
+    hint.textContent = "No se pudieron cargar las páginas predeterminadas.";
+    hint.classList.add("is-error");
+  });
 
 // Añade HTTPS cuando el usuario escribe un dominio sin protocolo.
 function prepararDireccion(value) {
@@ -116,7 +128,8 @@ frame.addEventListener("load", () => {
   hint.textContent = "";
 });
 
-function cargarProxy(urlCompleta, hostname) {
+async function cargarProxy(urlCompleta, hostname) {
+  await dataPromise;
   hint.textContent = "Cargando a través de Railway Proxy…";
   hint.classList.remove("is-error");
   currentAddress.textContent = hostname.toUpperCase();
