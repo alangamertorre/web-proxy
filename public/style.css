@@ -28,8 +28,15 @@ body {
 }
 
 button,
-input {
+input,
+code {
     font: inherit;
+}
+
+code {
+    background: var(--line);
+    border-radius: 20px;
+    color: var(--acid);
 }
 
 .workspace {
