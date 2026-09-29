@@ -34,7 +34,8 @@ code {
 }
 
 code {
-    background: var(--line);
+    background-color: var(--panel);
+    background-image: radial-gradient(ellipse at 84% 4%, var(--panel-raised), transparent 31%), linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px), linear-gradient(90deg, #20262121 1px, transparent 1px);
     border-radius: 20px;
     color: var(--acid);
 }
