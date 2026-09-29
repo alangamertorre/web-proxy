@@ -123,13 +123,12 @@ document.addEventListener("fullscreenchange", () => {
 });
 
 // Asegúrate de añadir el protocolo https:// a la URL de tu backend en Railway
-const [API_URL] = ["https://web-proxy-backend-production.up.railway.app"];
-
 frame.addEventListener("load", () => {
   hint.textContent = "";
 });
 
 async function cargarProxy(urlCompleta, hostname) {
+  const API_URL = "https://web-proxy-backend-production.up.railway.app";
   hint.textContent = "Cargando a través de Railway Proxy…";
   hint.classList.remove("is-error");
   currentAddress.textContent = hostname.toUpperCase();
