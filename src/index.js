@@ -134,14 +134,16 @@ async function cargarProxy(urlCompleta, hostname) {
   currentAddress.textContent = hostname.toUpperCase();
   emptyState.setAttribute("hidden", "true");
 
+  const url = `${API_URL}/proxy?url=${encodeURIComponent(urlCompleta)}`;
+
   for (const path of pages.path) {
     console.log("Ok", path);
     if (urlCompleta.includes(path)) {
-      window.open(path, "_blank", "noopener,noreferrer");
+      window.open(url, "_blank", "noopener,noreferrer");
       return;
     }
   }
 
-  frame.src = `${API_URL}/proxy?url=${encodeURIComponent(urlCompleta)}`;
-  console.log(`${API_URL}/proxy?url=${encodeURIComponent(urlCompleta)}`);
+  frame.src = url;
+  console.log(url);
 }
