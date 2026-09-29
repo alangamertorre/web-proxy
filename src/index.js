@@ -134,7 +134,7 @@ async function cargarProxy(urlCompleta, hostname) {
   currentAddress.textContent = hostname.toUpperCase();
   emptyState.setAttribute("hidden", "true");
 
-  for (const path of container.path) {
+  for (const path of pages.path) {
     console.log("Ok", path);
     if (urlCompleta.includes(path)) {
       window.open(path, "_blank", "noopener,noreferrer");
